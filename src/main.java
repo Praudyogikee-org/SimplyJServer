@@ -55,6 +55,9 @@ public class main {
 						String type = "";
 						if(path.contains(".")) {
 							type = content_types.get(path.substring(path.lastIndexOf(".")));
+						}else {
+							path = path+"/"+DEFAULT_DOCUMENT;
+							type = content_types.get(path.substring(path.lastIndexOf(".")));
 						}
 						if (type.contains("text")) {
 							res = API.readFile(path, true, os);
