@@ -58,6 +58,7 @@ public class main {
 							if (path.equals(DEFAULT_DOCUMENT) || path.equals("/index.html")) {
 								//DIV1
 							}
+							//DIV2
 						} else {
 							res = API.readFile(path, true, os);
 						}
