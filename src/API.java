@@ -68,7 +68,7 @@ public class API {
 			out = Files.readAllBytes(Paths.get(filename));
 			System.out.println("Reading "+Paths.get(filename));
 		} catch (Exception e) {
-			out = "404".getBytes();
+			out = "404 not found".getBytes();
 		}
 		return out;
 	}
