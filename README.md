@@ -8,7 +8,7 @@ Servlet, JSP, XAMPP, PHP, JS, NodeJS, Apache, Nginx, and others
 `cd src/ && javac main.java && java main`
 
 ## How to use?
-Navigate to [Documentation](http://anonybox.rf.gd/Doc.html "Documentation")
+Navigate to DOC.md
 
 ## Contributers
 Morad Abdelrasheed Mokhtar Ali Gill "Creator" 🇪🇬<br>
