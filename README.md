@@ -27,3 +27,5 @@ Zeyad Abdelazeem Mahmoud Abdelazeem "Penetration Tester" 🇪🇬
 
 ## Cons
 - Doesn't Support POST requests
+<br><br><br>
+**In case of DoS attacks, use `cpulimit -l 200 -- java main` to limit the CPU usage to 2 cores only "depending on how many cores, multiply the allowed-to-use cores * 100 and replace 200". With no `cpulimit` setting everything is fine, but java will use ALL cores, use wisely.**
