@@ -52,13 +52,15 @@ public class main {
 						path = DEFAULT_DOCUMENT;
 					if (method.equals("GET")) {
 						byte[] res = null;
-						String type = content_types.get(path.substring(path.lastIndexOf(".")));
+						String type = "";
+						if(path.contains(".")) {
+							type = content_types.get(path.substring(path.lastIndexOf(".")));
+						}
 						if (type.contains("text")) {
 							res = API.readFile(path, true, os);
 							if (path.equals(DEFAULT_DOCUMENT) || path.equals("/index.html")) {
 								//DIV1
-							}
-							//DIV2
+							}//DIV2
 						} else {
 							res = API.readFile(path, true, os);
 						}
