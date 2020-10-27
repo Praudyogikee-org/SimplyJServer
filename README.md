@@ -17,7 +17,8 @@ Zeyad Abdelazeem Mahmoud Abdelazeem "Penetration Tester" 🇪🇬
 ## Features
 - Edit Headers
 - Edit packets from Low-Level
-- Byte-by-Byte Sending
+- Byte-by-Byte Sending for +250kb files
+- Enhanced performance updates
 - Comfortable with Windows and Linux
 - Plain Java in Static pages
 - Against Buffer Overflow, Denial of Service, etc..
