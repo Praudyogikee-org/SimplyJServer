@@ -27,7 +27,8 @@ public class API {
 				s.write("Server: SimplyJServer\r\n".getBytes());
 				s.write("Content-Encoding: gzip\r\n".getBytes());
 				s.write(("Content-Length: " + res.length + "\r\n").getBytes());
-				s.write("Connection: close\r\n".getBytes());
+				s.write("Connection: Keep-Alive\r\n".getBytes());
+				s.write("Keep-Alive: timeout=5, max=1000\r\n".getBytes());				
 				if (content.equals("text/html")) {
 					s.write(("Content-Type: " + content + ";charset=UTF-8\r\n\r\n").getBytes());
 				} else {
