@@ -1,7 +1,9 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,16 +58,20 @@ public class main {
 				path = null;
 				param = null;
 			} catch (Exception e) {
-
+				e.printStackTrace();
 			}
 		}
 		public static void translator(String i) {
 			requestsLines = i.split("\r\n");
 			requestLine = requestsLines[0].split(" ");
 			method = requestLine[0];
-			if (requestLine[1].contains("?")) {
+			if (requestLine[1].contains("?") && requestLine[1].contains("=")) {
 				params = requestLine[1].substring(requestLine[1].indexOf("?") + 1);
-				params = params.replace("%20"," ");
+				try {
+					params = java.net.URLDecoder.decode(params, StandardCharsets.UTF_8.name());
+				} catch (UnsupportedEncodingException e) {
+					
+				}
 				param = TextToHashmap.Convert(params, "&", "=");
 				path = requestLine[1].substring(0, requestLine[1].indexOf("?"));
 			}else {
@@ -88,11 +94,11 @@ public class main {
 						byte[] res = null;
 						String type = "";
 						if(path.contains(".")) {
-							type = content_types.get(path.substring(path.lastIndexOf(".")));
+							
 						}else {
 							path = path+"/"+DEFAULT_DOCUMENT;
-							type = content_types.get(path.substring(path.lastIndexOf(".")));
 						}
+						type = content_types.get(path.substring(path.lastIndexOf(".")));
 						if (type.contains("text")) {
 							res = API.readFile(path, true, os);
 							if (path.equals(DEFAULT_DOCUMENT) || path.equals("/index.html")) {
@@ -105,7 +111,7 @@ public class main {
 						this.interrupt();
 				}
 			} catch (Exception e) {
-
+				SendGet(s,"404 not found".getBytes(),os);
 			}
 		}
 	}
