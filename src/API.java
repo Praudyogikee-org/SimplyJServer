@@ -2,6 +2,8 @@ import java.util.Arrays;
 import java.nio.file.StandardOpenOption;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -21,7 +23,7 @@ public class API {
 				byte[] temp;
 				int i = 0;
 				long First = System.currentTimeMillis();
-				if(res.length > 15000) {
+				if(res.length > 250 * 1000) {
 					while (i <= res.length) {
 						temp = Arrays.copyOfRange(res, i, i + 1);
 						s.write(temp);
@@ -69,9 +71,13 @@ public class API {
 			}
 		}
 		try {
-			out = Files.readAllBytes(Paths.get(filename));
+			File f = new File(filename);
+			FileInputStream m = new FileInputStream(f);
+			out = m.readAllBytes();
+			m.close();
 			System.out.println("Reading "+Paths.get(filename));
 		} catch (Exception e) {
+			System.out.println("Reading "+Paths.get(filename));
 			out = "404 not found".getBytes();
 		}
 		return out;
