@@ -111,7 +111,7 @@ public class main {
 						this.interrupt();
 				}
 			} catch (Exception e) {
-				SendGet(s,"404 not found".getBytes(),os);
+				SendGet(s,"901 Media Type isn't supported".getBytes(),os);
 				this.interrupt();
 			}
 		}
