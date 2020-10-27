@@ -1,5 +1,7 @@
 import java.util.Arrays;
+import java.util.zip.GZIPOutputStream;
 import java.nio.file.StandardOpenOption;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -8,11 +10,22 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class API {
+	public static byte[] compress(byte[] str) throws Exception {
+	    if (str == null || str.length == 0) {
+	        return null;
+	    }
+	    ByteArrayOutputStream obj=new ByteArrayOutputStream();
+	    GZIPOutputStream gzip = new GZIPOutputStream(obj);
+	    gzip.write(str);
+	    gzip.close();	    
+	    return obj.toByteArray();
+	 }
 	public static class Network {
 		public static void write(DataOutputStream s, byte[] res, String content) {
 			try {
 				s.write("HTTP/1.1 200 OK\r\n".getBytes());
 				s.write("Server: SimplyJServer\r\n".getBytes());
+				s.write("Content-Encoding: gzip\r\n".getBytes());
 				s.write(("Content-Length: " + res.length + "\r\n").getBytes());
 				s.write("Connection: close\r\n".getBytes());
 				if (content.equals("text/html")) {
@@ -22,6 +35,7 @@ public class API {
 				}
 				byte[] temp;
 				int i = 0;
+				res = compress(res);
 				long First = System.currentTimeMillis();
 				if(res.length > 250 * 1000) {
 					while (i <= res.length) {
@@ -37,7 +51,7 @@ public class API {
 				s.flush();
 				s.close();
 			} catch (Exception e) {
-				
+				e.printStackTrace();
 			}
 		}
 
@@ -55,7 +69,7 @@ public class API {
 		}
 	}
 
-	public static byte[] readFile(String filename, boolean ispublic, String os) throws Exception {
+	public static byte[] readFile(String filename, boolean ispublic, String os){
 		byte[] out = null;
 		if (ispublic) {
 			if (os.startsWith("win")) {
@@ -73,7 +87,11 @@ public class API {
 		try {
 			File f = new File(filename);
 			FileInputStream m = new FileInputStream(f);
+			try {
 			out = m.readAllBytes();
+			}catch(Exception ee) {
+				out = "Error".getBytes();
+			}
 			m.close();
 			System.out.println("Reading "+Paths.get(filename));
 		} catch (Exception e) {
