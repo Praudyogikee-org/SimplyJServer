@@ -112,6 +112,7 @@ public class main {
 				}
 			} catch (Exception e) {
 				SendGet(s,"404 not found".getBytes(),os);
+				this.interrupt();
 			}
 		}
 	}
