@@ -3,24 +3,15 @@ import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ConcurrentHashMap;
 public class main {
-	static String[] requestsLines;
-	static String[] requestLine;
-	static String method;
-	static String path;
-	static String version;
-	static String host;
 	static String os = System.getProperty("os.name", "unknown").toLowerCase(Locale.ROOT);
-	static List<String> headers = new ArrayList<>();
 	static int PORT = 80;
 	static String db;
 	static String DEFAULT_DOCUMENT = "index.html";
-	static String params = "";
-	static ConcurrentHashMap<String, String> content_types = new ConcurrentHashMap<String, String>();
-	static ConcurrentHashMap<String, String> param = new ConcurrentHashMap<String, String>();	
+	static HashMap<String, String> content_types = new HashMap<String, String>();
 	public static void main(String[] args) {
 		try {
 			ServerSocket s = new ServerSocket(PORT);
@@ -39,11 +30,54 @@ public class main {
 	}
 
 	public static class t extends Thread {
+		static HashMap<String, String> param = new HashMap<String, String>();
+		static List<String> headers = new ArrayList<>();
+		static String params = "";
+		static String[] requestsLines;
+		static String[] requestLine;
+		static String method;
+		static String path;
+		static String version;
+		static String host;
 		public Socket s;
 		t(Socket s) {
 			this.s = s;
 		}
+		public static void SendGet(Socket s, byte[] res, String type) {
+			try {
+				API.Network.write(new DataOutputStream(s.getOutputStream()), res, type);
+				param.clear();
+				headers.clear();
+				requestsLines = null;
+				requestLine = null;
+				method = null;
+				version = null;
+				host = null;
+				path = null;
+				param = null;
+			} catch (Exception e) {
 
+			}
+		}
+		public static void translator(String i) {
+			requestsLines = i.split("\r\n");
+			requestLine = requestsLines[0].split(" ");
+			method = requestLine[0];
+			if (requestLine[1].contains("?")) {
+				params = requestLine[1].substring(requestLine[1].indexOf("?") + 1);
+				params = params.replace("%20"," ");
+				param = TextToHashmap.Convert(params, "&", "=");
+				path = requestLine[1].substring(0, requestLine[1].indexOf("?"));
+			}else {
+				path = requestLine[1];
+			}
+			version = requestLine[2];
+			host = requestsLines[1].split(" ")[1];
+			for (int h = 2; h < requestsLines.length; h++) {
+				String header = requestsLines[h];
+				headers.add(header);
+			}
+		}
 		public void run() {
 			try {
 					String request = API.Network.read(new DataInputStream(s.getInputStream()));
@@ -75,39 +109,5 @@ public class main {
 			}
 		}
 	}
-	public static void SendGet(Socket s, byte[] res, String type) {
-		try {
-			API.Network.write(new DataOutputStream(s.getOutputStream()), res, type);
-			param.clear();
-			headers.clear();
-			requestsLines = null;
-			requestLine = null;
-			method = null;
-			version = null;
-			host = null;
-			path = null;
-			param = null;
-		} catch (Exception e) {
 
-		}
-	}
-	public static void translator(String i) {
-		requestsLines = i.split("\r\n");
-		requestLine = requestsLines[0].split(" ");
-		method = requestLine[0];
-		if (requestLine[1].contains("?")) {
-			params = requestLine[1].substring(requestLine[1].indexOf("?") + 1);
-			params = params.replace("%20"," ");
-			param = TextToHashmap.Convert(params, "&", "=");
-			path = requestLine[1].substring(0, requestLine[1].indexOf("?"));
-		}else {
-			path = requestLine[1];
-		}
-		version = requestLine[2];
-		host = requestsLines[1].split(" ")[1];
-		for (int h = 2; h < requestsLines.length; h++) {
-			String header = requestsLines[h];
-			headers.add(header);
-		}
-	}
 }
