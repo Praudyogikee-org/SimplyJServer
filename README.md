@@ -21,6 +21,7 @@ Zeyad Abdelazeem Mahmoud Abdelazeem "Penetration Tester" 🇪🇬
 - Enhanced performance updates
 - Comfortable with Windows and Linux
 - Plain Java in Static pages
+- GZIP all the time
 - Against Buffer Overflow, Denial of Service, etc..
 - Simple Structure with A clear Documentation
 - Convert your Java Application to Java Web Application in less than 2hrs.
