@@ -1,7 +1,6 @@
-import java.util.concurrent.ConcurrentHashMap;
-
+import java.util.HashMap;
 public class TextToHashmap {
-	public static ConcurrentHashMap<String, String> Convert(String text, String EDelimiter, String KVDelimiter) {
+	public static HashMap<String, String> Convert(String text, String EDelimiter, String KVDelimiter) {
 		/**
 		 * This function converts String/Text to HashMap
 		 * 
@@ -9,7 +8,7 @@ public class TextToHashmap {
 		 * @param EDelimiter  The delimiter between every element
 		 * @param KVDelimiter The delimiter between every Key and Value in one element
 		 */
-		ConcurrentHashMap<String, String> out = new ConcurrentHashMap<String, String>();
+		HashMap<String, String> out = new HashMap<String, String>();
 		String[] AText = text.split(EDelimiter);
 		for (int x = 0; x < AText.length; x++) {
 			String Element = AText[x];
