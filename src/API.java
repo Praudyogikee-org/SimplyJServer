@@ -21,10 +21,14 @@ public class API {
 				byte[] temp;
 				int i = 0;
 				long First = System.currentTimeMillis();
-				while (i <= res.length) {
-					temp = Arrays.copyOfRange(res, i, i + 1);
-					s.write(temp);
-					i = i + 1;
+				if(res.length > 15000) {
+					while (i <= res.length) {
+						temp = Arrays.copyOfRange(res, i, i + 1);
+						s.write(temp);
+						i = i + 1;
+					}
+				}else {
+					s.write(res);
 				}
 				long Final = System.currentTimeMillis() - First;
 				System.out.println("Sent in "+Final+" ms");
