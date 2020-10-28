@@ -100,18 +100,18 @@ public class main {
 						}
 						type = content_types.get(path.substring(path.lastIndexOf(".")));
 						if (type.contains("text")) {
-							res = API.readFile(path, true, os);
+							res = API.readFile(path, true, type);
 							if (path.equals(DEFAULT_DOCUMENT) || path.equals("/index.html")) {
 								//DIV1
 							}//DIV2
 						} else {
-							res = API.readFile(path, true, os);
+							res = API.readFile(path, true, type);
 						}
 						SendGet(s, res, type);
 						this.interrupt();
 				}
 			} catch (Exception e) {
-				SendGet(s,"901 Media Type isn't supported".getBytes(),os);
+				SendGet(s,"901 Media Type isn't supported".getBytes(),"text/html");
 				this.interrupt();
 			}
 		}
