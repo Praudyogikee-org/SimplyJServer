@@ -56,7 +56,6 @@ public class main {
 				version = null;
 				host = null;
 				path = null;
-				param = null;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
