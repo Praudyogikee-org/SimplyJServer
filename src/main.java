@@ -99,12 +99,12 @@ public class main {
 						}
 						type = content_types.get(path.substring(path.lastIndexOf(".")));
 						if (type.contains("text")) {
-							res = API.readFile(path, true, type);
+							res = API.readFile(path, true, os);
 							if (path.equals(DEFAULT_DOCUMENT) || path.equals("/index.html")) {
 								//DIV1
 							}//DIV2
 						} else {
-							res = API.readFile(path, true, type);
+							res = API.readFile(path, true, os);
 						}
 						SendGet(s, res, type);
 				}else {
