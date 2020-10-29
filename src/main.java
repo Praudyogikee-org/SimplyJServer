@@ -107,8 +107,9 @@ public class main {
 							res = API.readFile(path, true, type);
 						}
 						SendGet(s, res, type);
-						this.interrupt();
-				}
+				}else {
+					SendGet(s, "Type not supported".getBytes(), "text/html");
+					}
 			} catch (Exception e) {
 				SendGet(s,"901 Media Type isn't supported".getBytes(),"text/html");
 				this.interrupt();
