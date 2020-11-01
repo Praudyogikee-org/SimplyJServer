@@ -60,8 +60,18 @@ public class main {
 				e.printStackTrace();
 			}
 		}
-		public static void translator(String i) {
-			requestsLines = i.split("\r\n");
+		public static void translator(ArrayList<Byte> request) {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			DataOutputStream out = new DataOutputStream(baos);
+			for (byte element : request) {
+			    try {
+					out.write(element);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			String o = new String(baos.toByteArray());
+			requestsLines = o.split("\r\n");
 			requestLine = requestsLines[0].split(" ");
 			method = requestLine[0];
 			if (requestLine[1].contains("?") && requestLine[1].contains("=")) {
@@ -85,8 +95,8 @@ public class main {
 		}
 		public void run() {
 			try {
-					String request = API.Network.read(new DataInputStream(s.getInputStream()));
-					translator(request);
+				ArrayList<Byte> request = API.Network.read(new DataInputStream(s.getInputStream()));
+				translator(request);
 					if (path.equals("/"))
 						path = DEFAULT_DOCUMENT;
 					if (method.equals("GET")) {
