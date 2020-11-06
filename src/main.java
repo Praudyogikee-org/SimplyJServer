@@ -41,6 +41,7 @@ public class main {
 		static String path;
 		static String version;
 		static String host;
+		static String POST = "";
 		public Socket s;
 		t(Socket s) {
 			this.s = s;
@@ -92,6 +93,7 @@ public class main {
 				String header = requestsLines[h];
 				headers.add(header);
 			}
+			if(method.equals("POST")) POST = headers.get(headers.size()-1);
 		}
 		public void run() {
 			try {
@@ -99,7 +101,6 @@ public class main {
 				translator(request);
 					if (path.equals("/"))
 						path = DEFAULT_DOCUMENT;
-					if (method.equals("GET")) {
 						byte[] res = null;
 						String type = "";
 						if(path.contains(".")) {
@@ -117,9 +118,6 @@ public class main {
 							res = API.readFile(path, true, os);
 						}
 						SendGet(s, res, type);
-				}else {
-					SendGet(s, "Type not supported".getBytes(), "text/html");
-					}
 			} catch (Exception e) {
 				SendGet(s,"901 Media Type isn't supported".getBytes(),"text/html");
 				this.interrupt();
