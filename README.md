@@ -10,10 +10,6 @@ Servlet, JSP, XAMPP, PHP, JS, NodeJS, Apache, Nginx, and others
 ## How to use?
 Navigate to DOC.md
 
-## Contributers
-Morad Abdelrasheed Mokhtar Ali Gill "Creator" 🇪🇬<br>
-Zeyad Abdelazeem Mahmoud Abdelazeem "Penetration Tester" 🇪🇬
-
 ## Features
 - Edit Headers
 - Edit packets from Low-Level
