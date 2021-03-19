@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class API {
@@ -46,7 +47,7 @@ public class API {
 				s.flush();
 				s.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+				
 			}
 		}
 
@@ -57,7 +58,7 @@ public class API {
 					result.add(s.readByte());
 				} while (s.available() > 0);
 			} catch (IOException e) {
-				e.printStackTrace();
+				
 			}
 			return result;
 		}
@@ -69,12 +70,17 @@ public class API {
 			filename = Filenamer(filename, ispublic);
 			File f = new File(filename);
 			FileInputStream m = new FileInputStream(f);
+			boolean isSymbolicLink = Files.isSymbolicLink(Paths.get(filename));
+			if (isSymbolicLink){
+			    out = "404FILENOTFOUND".getBytes();
+			}else {
 			try {
 				out = m.readAllBytes();
 			} catch (Exception ee) {
 				out = "404FILENOTFOUND".getBytes();
 			}
 			m.close();
+			}
 		} catch (Exception e) {
 			out = "404FILENOTFOUND".getBytes();
 		}
