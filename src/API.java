@@ -97,8 +97,8 @@ public class API {
 	}
 
 	public static String Filenamer(String filename, boolean ispublic) {
+		filename = filename.replaceAll("../", "");
 		if (ispublic) {
-			filename = filename.replaceAll("../", "");
 			filename = ("../public_html/" + filename);
 		} else {
 			filename = ("../" + filename);
