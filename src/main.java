@@ -168,6 +168,7 @@ public class main {
 			try {
 				ArrayList<Byte> request = API.Network.read(new DataInputStream(s.getInputStream()));
 				translator(request);
+					if(path.contains("//")) path = "";
 					if (path.equals("/"))  path = DEFAULT_DOCUMENT;
 						byte[] res = null;
 						String type = "";
