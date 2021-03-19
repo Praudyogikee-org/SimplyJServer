@@ -174,6 +174,10 @@ public class main {
 						String type = "";
 						path = API.Pather(path, DEFAULT_DOCUMENT);
 						type = content_types.get(path.substring(path.lastIndexOf(".")));
+						if(type.isBlank()||type.isEmpty()||type.equals(null)||type.equals("")) {
+							SendGet(s, "404 file not found".getBytes(), type, "HTTP/1.1 404 FILE NOT FOUND");
+							this.interrupt();
+						}
 						res = API.readFile(path, true);
 						if(new String(res).equals("404FILENOTFOUND")) {
 							SendGet(s, "404 file not found".getBytes(), type, "HTTP/1.1 404 FILE NOT FOUND");
